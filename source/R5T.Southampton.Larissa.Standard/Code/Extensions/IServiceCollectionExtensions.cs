@@ -21,14 +21,14 @@ namespace R5T.Southampton.Larissa.Standard
             (
             IServiceAction<ISourceControlOperator> SourceControlOperatorAction,
             (
+            IServiceAction<ISvnOperator> main,
             IServiceAction<ICommandLineInvocationOperator> commandLineInvocationOperatorAction,
             IServiceAction<IOptions<SvnConfiguration>> svnConfigurationOptions,
-            IServiceAction<ISvnOperator> svnOperatorAction,
             IServiceAction<ISvnExecutableFilePathProvider> svnExecutableFilePathProviderAction
             ) SvnOperatorAction,
             (
-            IServiceAction<ISvnversionExecutableFilePathProvider> svnversionExecutableFilePathProviderAction,
-            IServiceAction<ISvnversionOperator> svnversionOperatorAction
+            IServiceAction<ISvnversionOperator> main,
+            IServiceAction<ISvnversionExecutableFilePathProvider> svnversionExecutableFilePathProviderAction
             ) SvnvesionOperatorAction
             )
         AddSvnSourceControlOperatorAction(this IServiceCollection services,
@@ -41,8 +41,8 @@ namespace R5T.Southampton.Larissa.Standard
 #pragma warning restore IDE0042 // Deconstruct variable declaration
 
             IServiceAction<ISourceControlOperator> sourceControlOperatorAction = ServiceAction<ISourceControlOperator>.New(() => services.AddSvnSourceControlOperator(
-                addSvnOperatorAction.svnOperatorAction,
-                addSvnversionOperatorAction.svnversionOperatorAction,
+                addSvnOperatorAction.main,
+                addSvnversionOperatorAction.main,
                 loggerAction));
 
             return (sourceControlOperatorAction, addSvnOperatorAction, addSvnversionOperatorAction);
